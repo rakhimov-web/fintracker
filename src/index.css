@@ -1,0 +1,62 @@
+@import url(https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;800;900&display=swap);
+:root {
+  --color-white: #ffffff;
+  --color-dark: #030213;
+  --color-charcoal: #0a0a0a;
+  --color-gray: #717182;
+  --color-light-gray: #f3f3f5;
+  --color-border-gray: #6b7280;
+  --color-bg-gray: #eceef2;
+  --color-blue: #2b7fff;
+  --color-green: #00c950;
+  --color-red: #d4183d;
+  --color-purple: #ad46ff;
+  --color-gradient-bg-start: #eff6ff;
+  --color-gradient-bg-end: #f0fdf4;
+  --color-rgba-black-10: rgba(0, 0, 0, 0.1);
+  --color-rgba-charcoal-50: rgba(10, 10, 10, 0.5);
+  --font: "Inter", sans-serif;
+
+  --menu-active-bg: #030213;
+  --menu-active-text: #ffffff;
+  --menu-inactive-text: #717182;
+}
+
+body.darkTheme {
+  --color-bg-gray: #090d16;         /* Chuqur to'q fon (Body uchun mukammal kontrast) */
+  --color-white: #131c2e;          /* Card va Login/SignUp bloklari foni */
+  --color-light-gray: #1e293b;      /* Inputlar ichki foni (Yaxshi ajralib turadi) */
+  --color-border-gray: #334155;  
+
+  --color-dark: #f8fafc;        
+  --color-charcoal: #e2e8f0;  
+  --color-gray: #94a3b8;         
+
+  --color-blue: #38bdf8;        
+  --color-green: #34d399;
+  --color-red: #f87171;
+  --color-purple: #c084fc;
+
+  --color-gradient-bg-start: #131c2e;
+  --color-gradient-bg-end: #090d16;
+  --color-rgba-black-10: rgba(255, 255, 255, 0.05);
+  --color-rgba-charcoal-50: rgba(248, 250, 252, 0.4);
+
+  --menu-active-bg: #38bdf8;
+  --menu-active-text: #090d16;
+  --menu-inactive-text: #94a3b8;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  font-family: var(--font);
+  transition: all 0.2s ease !important;
+}
+
+body {
+  background-color: var(--color-white);
+}

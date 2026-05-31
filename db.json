@@ -1,0 +1,85 @@
+{
+  "users": [
+    {
+      "id": "2c9f",
+      "userName": "John",
+      "userEmail": "john@gmail.com",
+      "userPass": "1234",
+      "phone": "+998 00 000 00 00",
+      "address": "Tashkent"
+    }
+  ],
+  "transactions": [
+    {
+      "id": "832b",
+      "userId": "2c9f",
+      "name": "Oylik",
+      "category": "Ishxona",
+      "amount": "8000000",
+      "date": "2026-05-31",
+      "type": "income"
+    },
+    {
+      "id": "839b",
+      "userId": "2c9f",
+      "name": "Jarima",
+      "category": "Ishxona",
+      "amount": "500000",
+      "date": "2026-06-01",
+      "type": "expense"
+    },
+    {
+      "userId": "2c9f",
+      "name": "Ro'zg'orlik",
+      "category": "Ovqat",
+      "amount": "1650000",
+      "date": "2026-06-02",
+      "type": "expense",
+      "id": "67af"
+    }
+  ],
+  "categories": [
+    {
+      "id": "d0a7",
+      "name": "Ovqat",
+      "icon": "shopping-cart",
+      "color": "#2b7fff",
+      "userId": "2c9f"
+    },
+    {
+      "id": "fc2e",
+      "name": "Transport",
+      "icon": "truck",
+      "color": "#00c950",
+      "userId": "2c9f"
+    },
+    {
+      "id": "e2e8",
+      "name": "To'lovlar",
+      "icon": "home",
+      "color": "#ff9f43",
+      "userId": "2c9f"
+    },
+    {
+      "id": "3ba7",
+      "name": "Ishxona",
+      "icon": "briefcase",
+      "color": "#465eff",
+      "userId": "2c9f"
+    },
+    {
+      "id": "28a8",
+      "name": "Salomatlik",
+      "icon": "heart",
+      "color": "#ff3b30",
+      "userId": "2c9f"
+    },
+    {
+      "id": "9a95",
+      "name": "O'yin-kulgi",
+      "icon": "gamepad",
+      "color": "#ad46ff",
+      "userId": "2c9f"
+    }
+  ]
+}

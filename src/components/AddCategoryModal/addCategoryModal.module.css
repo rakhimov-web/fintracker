@@ -1,0 +1,186 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  /* Loyihangizdagi o'zgaruvchilardan foydalanamiz (Dark mode uchun moslashuvchan bo'ladi) */
+  background-color: var(--color-white, #ffffff);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 440px;
+  padding: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--color-light-gray, #e5e7eb);
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modalTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-dark, #111827);
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--color-gray, #6b7280);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.closeBtn:hover {
+  background-color: var(--color-light-gray, #f3f4f6);
+}
+
+/* JSX dagi className={styles.form} ga moslashtirildi */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-gray, #374151);
+}
+
+.input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border-gray, #d1d5db);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  background-color: var(--color-light-gray, #f9fafb);
+  color: var(--color-dark, #111827);
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  border-color: var(--color-dark, #111827);
+  background-color: var(--color-white, #ffffff);
+}
+
+/* JSX dagi className={styles.iconsGrid} ga moslashtirildi */
+.iconsGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 ta ustun chiroyli sig'adi */
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.iconBtn {
+  aspect-ratio: 1;
+  background-color: var(--color-white, #ffffff);
+  border: 1px solid var(--color-light-gray, #e5e7eb);
+  border-radius: 8px;
+  font-size: 1.15rem;
+  color: var(--color-gray, #4b5563);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.iconBtn:hover {
+  background-color: var(--color-light-gray, #f9fafb);
+  border-color: var(--color-border-gray, #d1d5db);
+}
+
+.activeIcon {
+  border-color: var(--color-dark, #111827);
+  background-color: var(--color-light-gray, #f3f4f6);
+  color: var(--color-dark, #111827);
+  font-weight: 600;
+}
+
+.colorGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.colorBtn {
+  height: 32px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.2s;
+}
+
+.colorBtn:hover {
+  transform: scale(1.05);
+}
+
+.activeColor {
+  box-shadow: 0 0 0 2px var(--color-white, #ffffff), 0 0 0 4px var(--color-dark, #111827);
+}
+
+.actionsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.cancelBtn {
+  padding: 10px;
+  background-color: var(--color-white, #ffffff);
+  border: 1px solid var(--color-border-gray, #d1d5db);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-gray, #374151);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cancelBtn:hover {
+  background-color: var(--color-light-gray, #f9fafb);
+}
+
+.submitBtn {
+  padding: 10px;
+  background-color: var(--color-dark, #0b0f19);
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-white, #ffffff);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.submitBtn:hover {
+  opacity: 0.9;
+}

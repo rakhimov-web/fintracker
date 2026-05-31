@@ -1,0 +1,506 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-dark);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: var(--color-gray);
+  margin: 4px 0 0 0;
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.leftColumn,
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.card {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-light-gray);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.userHeader {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.avatarWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #e2f0fd;
+  color: #2b7fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  border: 1px solid var(--color-light-gray);
+}
+
+.fileInput {
+  display: none;
+}
+
+.cameraBtn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #11142d;
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  border: 2px solid var(--color-white);
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cameraBtn:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.userName {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-dark);
+  margin: 0;
+}
+
+.userEmail {
+  font-size: 14px;
+  color: var(--color-gray);
+  margin: 0;
+}
+
+.badges {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.badge {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.badge.premium {
+  background-color: #e2f0fd;
+  color: #2b7fff;
+}
+
+.badge.active {
+  background-color: #e6f9ed;
+  color: var(--color-green);
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-dark);
+  margin: 0 0 24px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-dark);
+}
+
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  background-color: var(--color-light-gray);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-size: 15px;
+  color: var(--color-dark);
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.input:focus {
+  border-color: var(--color-gray);
+  background-color: var(--color-white);
+}
+
+.saveBtn {
+  grid-column: span 2;
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  border: none;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.securitySection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.securityHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.securityIcon {
+  font-size: 20px;
+  color: var(--color-gray);
+}
+
+.securityTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-dark);
+  margin: 0;
+}
+
+.securitySub {
+  font-size: 13px;
+  color: var(--color-gray);
+  margin: 2px 0 0 0;
+}
+
+.passwordForm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 400px;
+}
+
+.passwordWrapper {
+  position: relative;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-gray);
+  cursor: pointer;
+}
+
+.updatePasswordBtn {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-light-gray);
+  color: var(--color-dark);
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.updatePasswordBtn:hover {
+  background-color: var(--color-light-gray);
+}
+
+.divider {
+  height: 1px;
+  background-color: var(--color-light-gray);
+  margin: 24px 0;
+}
+
+.twoFactorRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toggleBtn {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-light-gray);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.settingsList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.settingsItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.settingsLeft {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 20px;
+  color: var(--color-gray);
+}
+
+.settingName {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-dark);
+  display: block;
+}
+
+.settingDesc {
+  font-size: 13px;
+  color: var(--color-gray);
+  margin: 2px 0 0 0;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-light-gray);
+  transition: 0.3s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.3s;
+  border-radius: 50%;
+}
+
+.switch input:checked + .slider {
+  background-color: var(--color-dark);
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+.sideTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-dark);
+  margin: 0 0 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sideStatsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sideStatItem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.statIconBg {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: var(--color-light-gray);
+  color: var(--color-gray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.statLabel {
+  font-size: 13px;
+  color: var(--color-gray);
+  margin: 0;
+}
+
+.statValue {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-dark);
+  margin: 2px 0 0 0;
+}
+
+.actionLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.actionLink {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 12px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-dark);
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.actionLink:hover {
+  background-color: var(--color-light-gray);
+}
+
+.actionLink.logout {
+  color: #ff3b30;
+}
+
+.actionLink.logout:hover {
+  background-color: #fbe8ec;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  padding-left: 12px;
+}
+
+.timeline:before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background-color: var(--color-light-gray);
+}
+
+.timelineItem {
+  display: flex;
+  gap: 16px;
+  position: relative;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 6px;
+  z-index: 2;
+}
+
+.timelineContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.timelineText {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-dark);
+  margin: 0;
+}
+
+.timelineTime {
+  font-size: 12px;
+  color: var(--color-gray);
+  margin-top: 2px;
+}
