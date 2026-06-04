@@ -20,9 +20,9 @@ export default function Transactions() {
   const currentUserId = localStorage.getItem("userId") || "";
 
   const filters = [
-    { id: "all", label: "Barchasi" },
-    { id: "income", label: "Daromad" },
-    { id: "expense", label: "Xarajat" },
+    { id: "all", label: "All" },
+    { id: "income", label: "Income" },
+    { id: "expense", label: "Expense" },
   ];
 
   const fetchTransactions = () => {
@@ -43,7 +43,7 @@ export default function Transactions() {
   }, [currentUserId]);
 
   const handleDelete = (id) => {
-    if (!window.confirm("Tranzaksiyani o'chirishni xohlaysizmi?")) return;
+    if (!window.confirm("Do you want to delete this transaction?")) return;
 
     fetch(`http://localhost:5000/transactions/${id}`, {
       method: "DELETE",
@@ -65,7 +65,7 @@ export default function Transactions() {
   };
 
   const formatMoney = (num, type) => {
-    const formatted = num.toLocaleString("uz-UZ") + " so'm";
+    const formatted = num.toLocaleString("en-US") + " UZS";
     return type === "income" ? `+${formatted}` : `-${formatted}`;
   };
 
@@ -81,11 +81,11 @@ export default function Transactions() {
     <div className={styles.container}>
       <header className={styles.header}>
         <div className={styles.titleBlock}>
-          <h1 className={styles.title}>Tranzaksiyalar</h1>
-          <p className={styles.subtitle}>Barcha xarajat va daromadlar</p>
+          <h1 className={styles.title}>Transactions</h1>
+          <p className={styles.subtitle}>All expenses and incomes</p>
         </div>
         <button className={styles.addBtn} onClick={handleOpenAddModal}>
-          <FiPlus /> <span>Yangi tranzaksiya</span>
+          <FiPlus /> <span>New transaction</span>
         </button>
       </header>
 
@@ -94,7 +94,7 @@ export default function Transactions() {
           <FiSearch className={styles.searchIcon} />
           <input
             type="text"
-            placeholder="Qidirish..."
+            placeholder="Search..."
             className={styles.searchInput}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -143,14 +143,14 @@ export default function Transactions() {
                   <div className={styles.actions}>
                     <button
                       className={styles.actionBtn}
-                      title="Tahrirlash"
+                      title="Edit"
                       onClick={() => handleOpenEditModal(tx)}
                     >
                       <FiEdit2 />
                     </button>
                     <button
                       className={`${styles.actionBtn} ${styles.delete}`}
-                      title="O'chirish"
+                      title="Delete"
                       onClick={() => handleDelete(tx.id)}
                     >
                       <FiTrash2 />
@@ -162,10 +162,9 @@ export default function Transactions() {
           ) : (
             <div className={styles.emptyState}>
               <FiActivity className={styles.emptyIcon} />
-              <h4 className={styles.emptyTitle}>Hali harakat mavjud emas</h4>
+              <h4 className={styles.emptyTitle}>No activity yet</h4>
               <p className={styles.emptyText}>
-                Siz kiritgan kirim yoki chiqim tranzaksiyalari shu yerda
-                ko'rinadi.
+                Your income or expense transactions will appear here.
               </p>
             </div>
           )}

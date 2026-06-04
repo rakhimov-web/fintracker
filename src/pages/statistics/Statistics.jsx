@@ -87,36 +87,36 @@ export default function Statistics() {
         setPieData(calculatedPie);
 
         const monthlyMap = {
-          Yan: { name: "Yan", Daromad: 0, Xarajat: 0 },
-          Fev: { name: "Fev", Daromad: 0, Xarajat: 0 },
-          Mar: { name: "Mar", Daromad: 0, Xarajat: 0 },
-          Apr: { name: "Apr", Daromad: 0, Xarajat: 0 },
-          May: { name: "May", Daromad: 0, Xarajat: 0 },
-          Iyun: { name: "Iyun", Daromad: 0, Xarajat: 0 },
+          Jan: { name: "Jan", Income: 0, Expense: 0 },
+          Feb: { name: "Feb", Income: 0, Expense: 0 },
+          Mar: { name: "Mar", Income: 0, Expense: 0 },
+          Apr: { name: "Apr", Income: 0, Expense: 0 },
+          May: { name: "May", Income: 0, Expense: 0 },
+          Jun: { name: "Jun", Income: 0, Expense: 0 },
         };
 
         userTransactions.forEach((tx) => {
           if (tx.date) {
             const monthIndex = new Date(tx.date).getMonth();
             const monthsShort = [
-              "Yan",
-              "Fev",
+              "Jan",
+              "Feb",
               "Mar",
               "Apr",
               "May",
-              "Iyun",
-              "Iyu",
-              "Avg",
-              "Sen",
-              "Okt",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
               "Nov",
-              "Dek",
+              "Dec",
             ];
             const mName = monthsShort[monthIndex];
             if (monthlyMap[mName]) {
               const amt = parseFloat(tx.amount) || 0;
-              if (tx.type === "income") monthlyMap[mName].Daromad += amt;
-              if (tx.type === "expense") monthlyMap[mName].Xarajat += amt;
+              if (tx.type === "income") monthlyMap[mName].Income += amt;
+              if (tx.type === "expense") monthlyMap[mName].Expense += amt;
             }
           }
         });
@@ -126,9 +126,9 @@ export default function Statistics() {
         const calculatedBar = Object.values(categoryMap)
           .map((item) => ({
             name: item.name,
-            xarajat: item.value,
+            expense: item.value,
           }))
-          .filter((i) => i.xarajat > 0);
+          .filter((i) => i.expense > 0);
         setBarData(calculatedBar);
 
         setTotals({
@@ -145,35 +145,35 @@ export default function Statistics() {
   }, [currentUserId]);
 
   const formatMoney = (num) => {
-    return num.toLocaleString("uz-UZ") + " so'm";
+    return num.toLocaleString("uz-UZ") + " UZS";
   };
 
   const statsCards = [
     {
       id: 1,
-      title: "Umumiy Daromad",
+      title: "Total Income",
       value: formatMoney(totals.inc),
       type: "income",
       icon: <FiArrowUpRight />,
     },
     {
       id: 2,
-      title: "Umumiy Xarajat",
+      title: "Total Expense",
       value: formatMoney(totals.exp),
       type: "expense",
       icon: <FiArrowDownRight />,
     },
     {
       id: 3,
-      title: "O'rtacha amal",
+      title: "Average Transaction",
       value: formatMoney(totals.avg),
       type: "average",
       icon: <FiPercent />,
     },
     {
       id: 4,
-      title: "Amallar soni",
-      value: `${totals.count} ta`,
+      title: "Number of Actions",
+      value: `${totals.count} items`,
       type: "count",
       icon: <FiActivity />,
     },
@@ -183,19 +183,17 @@ export default function Statistics() {
     <div className={styles.container}>
       <header className={styles.header}>
         <div className={styles.titleBlock}>
-          <h1 className={styles.title}>Statistika</h1>
-          <p className={styles.subtitle}>Xarajatlaringiz bo'yicha tahlil</p>
+          <h1 className={styles.title}>Statistics</h1>
+          <p className={styles.subtitle}>Expense analysis</p>
         </div>
         <div className={styles.datePicker}>
           <FiCalendar />
-          <span>Barcha davrlar</span>
+          <span>All periods</span>
         </div>
       </header>
 
       <div className={styles.chartCardFull}>
-        <h3 className={styles.chartTitle}>
-          Daromad va xarajatlar tendensiyasi
-        </h3>
+        <h3 className={styles.chartTitle}>Income and expense trends</h3>
         <div className={styles.lineChartWrapper}>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={lineData}>
@@ -215,7 +213,7 @@ export default function Statistics() {
               <Legend iconType="circle" />
               <Line
                 type="monotone"
-                dataKey="Daromad"
+                dataKey="Income"
                 stroke="#00c950"
                 strokeWidth={3}
                 dot={{ r: 4 }}
@@ -223,7 +221,7 @@ export default function Statistics() {
               />
               <Line
                 type="monotone"
-                dataKey="Xarajat"
+                dataKey="Expense"
                 stroke="#d4183d"
                 strokeWidth={3}
                 dot={{ r: 4 }}
@@ -236,7 +234,7 @@ export default function Statistics() {
 
       <div className={styles.chartsGrid}>
         <div className={styles.chartCard}>
-          <h3 className={styles.chartTitle}>Kategoriyalar bo'yicha taqsimot</h3>
+          <h3 className={styles.chartTitle}>Category distribution</h3>
           <div className={styles.pieChartWrapper}>
             {pieData.length > 0 ? (
               <ResponsiveContainer width="100%" height="100%">
@@ -270,14 +268,14 @@ export default function Statistics() {
                   paddingTop: "100px",
                 }}
               >
-                Xarajatlar mavjud emas
+                No expenses available
               </p>
             )}
           </div>
         </div>
 
         <div className={styles.chartCard}>
-          <h3 className={styles.chartTitle}>Haftalik xarajatlar</h3>
+          <h3 className={styles.chartTitle}>Weekly expenses</h3>
           <div className={styles.barChartWrapper}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={barData}>
@@ -301,7 +299,7 @@ export default function Statistics() {
                 />
                 <Tooltip formatter={(value) => formatMoney(value)} />
                 <Bar
-                  dataKey="xarajat"
+                  dataKey="expense"
                   fill="#2b7fff"
                   radius={[6, 6, 0, 0]}
                   barSize={40}

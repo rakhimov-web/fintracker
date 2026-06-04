@@ -46,7 +46,7 @@ export default function AddTransactionModal({ onClose, onRefresh, editData }) {
     e.preventDefault();
 
     if (!name || !amount || !category || !date) {
-      alert("Iltimos, barcha maydonlarni to'ldiring!");
+      alert("Please fill in all fields!");
       return;
     }
 
@@ -85,7 +85,7 @@ export default function AddTransactionModal({ onClose, onRefresh, editData }) {
       <div className={styles.modalContent}>
         <div className={styles.modalHeader}>
           <h2 className={styles.modalTitle}>
-            {editData ? "Tranzaksiyani tahrirlash" : "Yangi tranzaksiya"}
+            {editData ? "Edit Transaction" : "New Transaction"}
           </h2>
           <button className={styles.closeBtn} onClick={onClose}>
             <FiX />
@@ -94,10 +94,10 @@ export default function AddTransactionModal({ onClose, onRefresh, editData }) {
 
         <form className={styles.modalForm} onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Nomi</label>
+            <label className={styles.label}>Name</label>
             <input
               type="text"
-              placeholder="Masalan: Supermarket"
+              placeholder="Example: Supermarket"
               className={styles.input}
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -105,7 +105,7 @@ export default function AddTransactionModal({ onClose, onRefresh, editData }) {
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label}>Summa (so'm)</label>
+            <label className={styles.label}>Amount (UZS)</label>
             <input
               type="number"
               placeholder="0"
@@ -116,7 +116,7 @@ export default function AddTransactionModal({ onClose, onRefresh, editData }) {
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label}>Kategoriya</label>
+            <label className={styles.label}>Category</label>
             <select
               className={styles.input}
               value={category}
@@ -131,7 +131,7 @@ export default function AddTransactionModal({ onClose, onRefresh, editData }) {
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label}>Sana</label>
+            <label className={styles.label}>Date</label>
             <input
               type="date"
               className={styles.input}
@@ -141,7 +141,7 @@ export default function AddTransactionModal({ onClose, onRefresh, editData }) {
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label}>Turi</label>
+            <label className={styles.label}>Type</label>
             <div className={styles.typeGrid}>
               <button
                 type="button"
@@ -150,7 +150,7 @@ export default function AddTransactionModal({ onClose, onRefresh, editData }) {
                 }`}
                 onClick={() => setType("expense")}
               >
-                <FiTrendingDown /> Xarajat
+                <FiTrendingDown /> Expense
               </button>
               <button
                 type="button"
@@ -159,7 +159,7 @@ export default function AddTransactionModal({ onClose, onRefresh, editData }) {
                 }`}
                 onClick={() => setType("income")}
               >
-                <FiTrendingUp /> Daromad
+                <FiTrendingUp /> Income
               </button>
             </div>
           </div>
@@ -170,10 +170,10 @@ export default function AddTransactionModal({ onClose, onRefresh, editData }) {
               className={styles.cancelBtn}
               onClick={onClose}
             >
-              Bekor qilish
+              Cancel
             </button>
             <button type="submit" className={styles.submitBtn}>
-              {editData ? "Saqlash" : "Qo'shish"}
+              {editData ? "Save" : "Add"}
             </button>
           </div>
         </form>

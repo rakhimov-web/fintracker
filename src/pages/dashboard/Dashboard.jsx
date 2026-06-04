@@ -88,7 +88,7 @@ export default function Dashboard() {
   }, [currentUserId]);
 
   const formatMoney = (num) => {
-    return num.toLocaleString("uz-UZ") + " so'm";
+    return num.toLocaleString("en-US") + " UZS";
   };
 
   return (
@@ -96,11 +96,11 @@ export default function Dashboard() {
       <header className={styles.header}>
         <div className={styles.titleBlock}>
           <h1 className={styles.title}>Dashboard</h1>
-          <p className={styles.subtitle}>Xarajatlaringizni boshqaring</p>
+          <p className={styles.subtitle}>Manage your expenses</p>
         </div>
         <div className={styles.datePicker}>
           <FiCalendar />
-          <span>{new Date().toLocaleDateString("uz-UZ")}</span>
+          <span>{new Date().toLocaleDateString("en-US")}</span>
         </div>
       </header>
 
@@ -114,7 +114,7 @@ export default function Dashboard() {
           </div>
           <h2 className={styles.cardValue}>{formatMoney(totals.balance)}</h2>
           <div className={styles.cardFooter}>
-            <span className={styles.footerLink}>Umumiy balans</span>
+            <span className={styles.footerLink}>Total balance</span>
           </div>
         </div>
 
@@ -129,7 +129,7 @@ export default function Dashboard() {
             {formatMoney(totals.income)}
           </h2>
           <div className={styles.cardFooter}>
-            <span className={styles.trendUp}>Ushbu oy</span>
+            <span className={styles.trendUp}>This month</span>
           </div>
         </div>
 
@@ -144,7 +144,7 @@ export default function Dashboard() {
             {formatMoney(totals.expense)}
           </h2>
           <div className={styles.cardFooter}>
-            <span className={styles.trendDown}>Ushbu oy</span>
+            <span className={styles.trendDown}>This month</span>
           </div>
         </div>
       </div>
@@ -152,12 +152,12 @@ export default function Dashboard() {
       <div className={styles.contentGrid}>
         <div className={styles.sectionCard}>
           <div className={styles.sectionHeader}>
-            <h3 className={styles.sectionTitle}>So'nggi tranzaksiyalar</h3>
+            <h3 className={styles.sectionTitle}>Recent transactions</h3>
             <button
               className={styles.viewAllBtn}
               onClick={() => navigate("/dashboard/transaction")}
             >
-              Barchasini ko'rish
+              View all
             </button>
           </div>
           <div className={styles.listContainer}>
@@ -189,9 +189,9 @@ export default function Dashboard() {
             ) : (
               <div className={styles.emptyState}>
                 <FiActivity className={styles.emptyIcon} />
-                <h4 className={styles.emptyTitle}>Harakatlar yo'q</h4>
+                <h4 className={styles.emptyTitle}>No transactions</h4>
                 <p className={styles.emptyText}>
-                  Hali hech qanday kirim yoki chiqim qo'shilmagan.
+                  No income or expense has been added yet.
                 </p>
               </div>
             )}
@@ -200,7 +200,7 @@ export default function Dashboard() {
 
         <div className={styles.sectionCard}>
           <div className={styles.sectionHeader}>
-            <h3 className={styles.sectionTitle}>Kategoriyalar bo'yicha</h3>
+            <h3 className={styles.sectionTitle}>By categories</h3>
           </div>
           <div className={styles.listContainer}>
             {totals.expense > 0 && categories.length > 0 ? (
@@ -228,10 +228,10 @@ export default function Dashboard() {
             ) : (
               <div className={styles.emptyState}>
                 <FiPieChart className={styles.emptyIcon} />
-                <h4 className={styles.emptyTitle}>Kategoriyalar bo'sh</h4>
+                <h4 className={styles.emptyTitle}>No categories</h4>
                 <p className={styles.emptyText}>
-                  Xarajatlar qayd etilgandan so'ng, ularning statistikasi bu
-                  yerda guruhlanadi.
+                  When expenses are recorded, their statistics will be grouped
+                  here.
                 </p>
               </div>
             )}

@@ -17,11 +17,13 @@ import {
   FiLogOut,
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import profileImg from '../../assets/images/profile-img.png'
 import styles from "./profile.module.css";
+import Toast from "../../components/Toast/Toast";
+import { useToast } from "../../components/Toast/useToast";
 
 export default function Profile() {
   const navigate = useNavigate();
+  const { toasts, toast, removeToast } = useToast();
   const [currentUser, setCurrentUser] = useState(null);
 
   const [name, setName] = useState("");
@@ -35,7 +37,7 @@ export default function Profile() {
   const [showNewPass, setShowNewPass] = useState(false);
 
   const [isDark, setIsDark] = useState(
-    document.body.classList.contains("darkTheme"),
+    () => document.documentElement.getAttribute("data-theme") === "dark",
   );
 
   useEffect(() => {
@@ -54,8 +56,15 @@ export default function Profile() {
   }, []);
 
   const handleThemeToggle = () => {
-    document.body.classList.toggle("darkTheme");
-    setIsDark(!isDark);
+    const next = !isDark;
+    setIsDark(next);
+    if (next) {
+      document.documentElement.setAttribute("data-theme", "dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.removeAttribute("data-theme");
+      localStorage.setItem("theme", "light");
+    }
   };
 
   const handlePhoneChange = (e) => {
@@ -90,17 +99,17 @@ export default function Profile() {
       .then((res) => res.json())
       .then((data) => {
         setCurrentUser(data);
-        alert("Ma'lumotlaringiz bazada muvaffaqiyatli yangilandi, Bro!");
+        toast({ message: "Profile updated successfully.", type: "success" });
       });
   };
 
   const handlePasswordUpdate = () => {
     if (!oldPassword || !newPassword) {
-      alert("Iltimos, ikkala parol maydonini ham to'ldiring!");
+      toast({ message: "Please fill in both password fields.", type: "error" });
       return;
     }
     if (oldPassword !== newPassword) {
-      alert("Kiritilgan parollar bir-biriga mos kelmadi!");
+      toast({ message: "Passwords do not match.", type: "error" });
       return;
     }
     if (!currentUser) return;
@@ -112,9 +121,11 @@ export default function Profile() {
     }).then(() => {
       setOldPassword("");
       setNewPassword("");
-      alert("Parolingiz muvaffaqiyatli o'zgartirildi! Tizimdan chiqiladi.");
-      localStorage.removeItem("isAuth");
-      navigate("/login");
+      toast({ message: "Password updated. Signing out...", type: "success" });
+      setTimeout(() => {
+        localStorage.removeItem("isAuth");
+        navigate("/login");
+      }, 1500);
     });
   };
 
@@ -124,19 +135,19 @@ export default function Profile() {
   };
 
   const disabledStyle = {
-    opacity: 0.5,
+    opacity: 0.4,
     pointerEvents: "none",
     cursor: "not-allowed",
   };
 
   return (
     <div className={styles.container}>
+      <Toast toasts={toasts} removeToast={removeToast} />
+
       <header className={styles.header}>
         <div className={styles.titleBlock}>
-          <h1>Profil</h1>
-          <p className={styles.subtitle}>
-            Shaxsiy ma'lumotlaringizni boshqaring
-          </p>
+          <h1 className={styles.title}>Profile</h1>
+          <p className={styles.subtitle}>Manage your personal information</p>
         </div>
       </header>
 
@@ -150,16 +161,16 @@ export default function Profile() {
                 </div>
               </div>
               <div className={styles.userInfo}>
-                <h2 className={styles.userName}>{name || "Foydalanuvchi"}</h2>
+                <h2 className={styles.userName}>{name || "User"}</h2>
                 <p className={styles.userEmail}>
                   {email || "user@example.com"}
                 </p>
                 <div className={styles.badges}>
                   <span className={`${styles.badge} ${styles.premium}`}>
-                    Premium foydalanuvchi
+                    Premium
                   </span>
                   <span className={`${styles.badge} ${styles.active}`}>
-                    Faol
+                    Active
                   </span>
                 </div>
               </div>
@@ -168,11 +179,11 @@ export default function Profile() {
 
           <div className={styles.card}>
             <h3 className={styles.sectionTitle}>
-              <FiUser /> Shaxsiy ma'lumotlar
+              <FiUser /> Personal information
             </h3>
             <form className={styles.form} onSubmit={handleSaveInfo}>
               <div className={styles.inputGroup}>
-                <label className={styles.label}>Ism</label>
+                <label className={styles.label}>Full name</label>
                 <input
                   type="text"
                   value={name}
@@ -192,7 +203,7 @@ export default function Profile() {
                 />
               </div>
               <div className={styles.inputGroup}>
-                <label className={styles.label}>Telefon</label>
+                <label className={styles.label}>Phone</label>
                 <input
                   type="text"
                   value={phone}
@@ -202,33 +213,31 @@ export default function Profile() {
                 />
               </div>
               <div className={styles.inputGroup}>
-                <label className={styles.label}>Manzil</label>
+                <label className={styles.label}>Address</label>
                 <input
                   type="text"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   className={styles.input}
-                  placeholder="Manzilingizni kiriting"
+                  placeholder="Enter your address"
                 />
               </div>
               <button type="submit" className={styles.saveBtn}>
-                O'zgarishlarni saqlash
+                Save changes
               </button>
             </form>
           </div>
 
           <div className={styles.card}>
             <h3 className={styles.sectionTitle}>
-              <FiShield /> Xavfsizlik sozlamalari
+              <FiShield /> Security
             </h3>
             <div className={styles.securitySection}>
               <div className={styles.securityHeader}>
                 <FiLock className={styles.securityIcon} />
                 <div>
-                  <h4 className={styles.securityTitle}>Parolni o'zgartirish</h4>
-                  <p className={styles.securitySub}>
-                    Oxirgi o'zgarish: 30 kun oldin
-                  </p>
+                  <h4 className={styles.securityTitle}>Change password</h4>
+                  <p className={styles.securitySub}>Last changed 30 days ago</p>
                 </div>
               </div>
               <div className={styles.passwordForm}>
@@ -238,7 +247,7 @@ export default function Profile() {
                 >
                   <input
                     type={showOldPass ? "text" : "password"}
-                    placeholder="Yangi parol"
+                    placeholder="New password"
                     value={oldPassword}
                     onChange={(e) => setOldPassword(e.target.value)}
                     className={styles.input}
@@ -262,7 +271,7 @@ export default function Profile() {
                 >
                   <input
                     type={showNewPass ? "text" : "password"}
-                    placeholder="Yangi parolni tasdiqlang"
+                    placeholder="Confirm new password"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     className={styles.input}
@@ -285,7 +294,7 @@ export default function Profile() {
                   onClick={handlePasswordUpdate}
                   className={styles.updatePasswordBtn}
                 >
-                  Parolni yangilash
+                  Update password
                 </button>
               </div>
             </div>
@@ -295,21 +304,21 @@ export default function Profile() {
             <div className={styles.twoFactorRow} style={disabledStyle}>
               <div className={styles.twoFactorText}>
                 <h4 className={styles.securityTitle}>
-                  Ikki bosqichli autentifikatsiya
+                  Two-factor authentication
                 </h4>
                 <p className={styles.securitySub}>
-                  Qo'shimcha xavfsizlik qatlami
+                  Add an extra layer of security
                 </p>
               </div>
               <button className={styles.toggleBtn} disabled>
-                Yoqish
+                Enable
               </button>
             </div>
           </div>
 
           <div className={styles.card}>
             <h3 className={styles.sectionTitle}>
-              <FiSettings /> Sozlamalar
+              <FiSettings /> Preferences
             </h3>
             <div className={styles.settingsList}>
               <div className={styles.settingsItem} style={disabledStyle}>
@@ -317,10 +326,10 @@ export default function Profile() {
                   <FiBell />
                   <div>
                     <span className={styles.settingName}>
-                      Push bildirishnomalar
+                      Push notifications
                     </span>
                     <p className={styles.settingDesc}>
-                      Yangi xarajatlar haqida xabarnoma
+                      Alerts for new expenses
                     </p>
                   </div>
                 </div>
@@ -335,9 +344,11 @@ export default function Profile() {
                   <FiMail />
                   <div>
                     <span className={styles.settingName}>
-                      Email xabarnomalar
+                      Email notifications
                     </span>
-                    <p className={styles.settingDesc}>Haftalik hisobotlar</p>
+                    <p className={styles.settingDesc}>
+                      Weekly spending reports
+                    </p>
                   </div>
                 </div>
                 <label className={styles.switch}>
@@ -350,8 +361,10 @@ export default function Profile() {
                 <div className={styles.settingsLeft}>
                   <FiMoon />
                   <div>
-                    <span className={styles.settingName}>Tungi rejim</span>
-                    <p className={styles.settingDesc}>Qorong'i interfeys</p>
+                    <span className={styles.settingName}>Dark mode</span>
+                    <p className={styles.settingDesc}>
+                      Switch to dark interface
+                    </p>
                   </div>
                 </div>
                 <label className={styles.switch}>
@@ -370,7 +383,7 @@ export default function Profile() {
         <div className={styles.rightColumn}>
           <div className={styles.card}>
             <h3 className={styles.sideTitle}>
-              <FiActivity /> Statistika
+              <FiActivity /> Statistics
             </h3>
             <div className={styles.sideStatsList}>
               <div className={styles.sideStatItem}>
@@ -378,8 +391,8 @@ export default function Profile() {
                   <FiCalendar />
                 </div>
                 <div>
-                  <p className={styles.statLabel}>Ro'yxatdan o'tgan</p>
-                  <h4 className={styles.statValue}>15 Yanvar, 2026</h4>
+                  <p className={styles.statLabel}>Member since</p>
+                  <h4 className={styles.statValue}>Jan 15, 2026</h4>
                 </div>
               </div>
               <div className={styles.sideStatItem}>
@@ -387,7 +400,7 @@ export default function Profile() {
                   <FiCreditCard />
                 </div>
                 <div>
-                  <p className={styles.statLabel}>Jami tranzaksiyalar</p>
+                  <p className={styles.statLabel}>Total transactions</p>
                   <h4 className={styles.statValue}>847</h4>
                 </div>
               </div>
@@ -395,19 +408,20 @@ export default function Profile() {
                 <div
                   className={styles.statIconBg}
                   style={{
-                    color: "var(--color-red)",
-                    backgroundColor: "rgba(212, 24, 61, 0.1)",
+                    color: "var(--expense)",
+                    backgroundColor: "var(--expense-bg)",
+                    borderColor: "var(--expense-border)",
                   }}
                 >
                   <FiDollarSign />
                 </div>
                 <div>
-                  <p className={styles.statLabel}>Jami xarajat</p>
+                  <p className={styles.statLabel}>Total expenses</p>
                   <h4
                     className={styles.statValue}
-                    style={{ color: "var(--color-red)" }}
+                    style={{ color: "var(--expense)" }}
                   >
-                    12,450,000 so'm
+                    12,450,000
                   </h4>
                 </div>
               </div>
@@ -415,19 +429,20 @@ export default function Profile() {
                 <div
                   className={styles.statIconBg}
                   style={{
-                    color: "var(--color-green)",
-                    backgroundColor: "rgba(0, 201, 80, 0.1)",
+                    color: "var(--income)",
+                    backgroundColor: "var(--income-bg)",
+                    borderColor: "var(--income-border)",
                   }}
                 >
                   <FiDollarSign />
                 </div>
                 <div>
-                  <p className={styles.statLabel}>Jami daromad</p>
+                  <p className={styles.statLabel}>Total income</p>
                   <h4
                     className={styles.statValue}
-                    style={{ color: "var(--color-green)" }}
+                    style={{ color: "var(--income)" }}
                   >
-                    24,000,000 so'm
+                    24,000,000
                   </h4>
                 </div>
               </div>
@@ -435,58 +450,58 @@ export default function Profile() {
           </div>
 
           <div className={styles.card}>
-            <h3 className={styles.sideTitle}>Hisob harakatlari</h3>
+            <h3 className={styles.sideTitle}>Account actions</h3>
             <div className={styles.actionLinks}>
               <button className={styles.actionLink} style={disabledStyle}>
-                <FiMapPin /> Manzilni yangilash
+                <FiMapPin /> Update address
               </button>
               <button className={styles.actionLink} style={disabledStyle}>
-                <FiCreditCard /> To'lov usullarini boshqarish
+                <FiCreditCard /> Manage payment methods
               </button>
               <button className={styles.actionLink} style={disabledStyle}>
-                <FiShield /> Maxfiylik sozlamalari
+                <FiShield /> Privacy settings
               </button>
               <button
                 type="button"
                 onClick={handleLogout}
                 className={`${styles.actionLink} ${styles.logout}`}
               >
-                <FiLogOut /> Hisobdan chiqish
+                <FiLogOut /> Sign out
               </button>
             </div>
           </div>
 
           <div className={styles.card}>
-            <h3 className={styles.sideTitle}>So'nggi faoliyat</h3>
+            <h3 className={styles.sideTitle}>Recent activity</h3>
             <div className={styles.timeline}>
               <div className={styles.timelineItem}>
                 <div
                   className={styles.dot}
-                  style={{ backgroundColor: "var(--color-green)" }}
+                  style={{ backgroundColor: "var(--income)" }}
                 />
                 <div className={styles.timelineContent}>
-                  <p className={styles.timelineText}>Parol yangilandi</p>
-                  <span className={styles.timelineTime}>2 soat oldin</span>
+                  <p className={styles.timelineText}>Password updated</p>
+                  <span className={styles.timelineTime}>2 hours ago</span>
                 </div>
               </div>
               <div className={styles.timelineItem}>
                 <div
                   className={styles.dot}
-                  style={{ backgroundColor: "var(--color-blue)" }}
+                  style={{ backgroundColor: "#3B82F6" }}
                 />
                 <div className={styles.timelineContent}>
-                  <p className={styles.timelineText}>Profil tahrirlandi</p>
-                  <span className={styles.timelineTime}>1 kun oldin</span>
+                  <p className={styles.timelineText}>Profile edited</p>
+                  <span className={styles.timelineTime}>1 day ago</span>
                 </div>
               </div>
               <div className={styles.timelineItem}>
                 <div
                   className={styles.dot}
-                  style={{ backgroundColor: "var(--color-purple)" }}
+                  style={{ backgroundColor: "#A855F7" }}
                 />
                 <div className={styles.timelineContent}>
-                  <p className={styles.timelineText}>Yangi qurilma</p>
-                  <span className={styles.timelineTime}>3 kun oldin</span>
+                  <p className={styles.timelineText}>New device login</p>
+                  <span className={styles.timelineTime}>3 days ago</span>
                 </div>
               </div>
             </div>

@@ -14,12 +14,12 @@ import AddCategoryModal from "../../components/AddCategoryModal/AddCategoryModal
 import styles from "./categories.module.css";
 
 const DEFAULT_CATEGORIES = [
-  { name: "Ovqat", icon: "shopping-cart", color: "#2b7fff" },
+  { name: "Food", icon: "shopping-cart", color: "#2b7fff" },
   { name: "Transport", icon: "truck", color: "#00c950" },
-  { name: "To'lovlar", icon: "home", color: "#ff9f43" },
-  { name: "O'yin-kulgi", icon: "gamepad", color: "#ad46ff" },
-  { name: "Salomatlik", icon: "heart", color: "#ff3b30" },
-  { name: "Ishxona", icon: "briefcase", color: "#465eff" },
+  { name: "Payments", icon: "home", color: "#ff9f43" },
+  { name: "Entertainment", icon: "gamepad", color: "#ad46ff" },
+  { name: "Health", icon: "heart", color: "#ff3b30" },
+  { name: "Work", icon: "briefcase", color: "#465eff" },
 ];
 
 export default function Categories() {
@@ -153,7 +153,7 @@ export default function Categories() {
   }, [currentUserId]);
 
   const formatMoney = (num) => {
-    const formatted = Math.abs(num).toLocaleString("uz-UZ") + " so'm";
+    const formatted = Math.abs(num).toLocaleString("en-US") + " UZS";
     return num < 0 ? `-${formatted}` : `+${formatted}`;
   };
 
@@ -161,15 +161,13 @@ export default function Categories() {
     <div className={styles.container}>
       <header className={styles.header}>
         <div className={styles.titleBlock}>
-          <h1 className={styles.title}>Kategoriyalar</h1>
-          <p className={styles.subtitle}>
-            Xarajatlaringizni kategoriyalar bo'yicha boshqaring
-          </p>
+          <h1 className={styles.title}>Categories</h1>
+          <p className={styles.subtitle}>Manage your expenses by category</p>
         </div>
 
         <button className={styles.addBtn} onClick={() => setIsModalOpen(true)}>
           <FiPlus />
-          <span>Yangi kategoriya</span>
+          <span>New category</span>
         </button>
       </header>
 
@@ -203,10 +201,10 @@ export default function Categories() {
               <div className={styles.cardBody}>
                 <h3 className={styles.catName}>{cat.name}</h3>
 
-                <p className={styles.catCount}>{cat.count} ta tranzaksiya</p>
+                <p className={styles.catCount}>{cat.count} transactions</p>
 
                 <h4 className={`${styles.catAmount} ${amountClass}`}>
-                  {cat.netAmount === 0 ? "0 so'm" : formatMoney(cat.netAmount)}
+                  {cat.netAmount === 0 ? "0 UZS" : formatMoney(cat.netAmount)}
                 </h4>
               </div>
 
@@ -225,7 +223,7 @@ export default function Categories() {
       </div>
 
       <div className={styles.summaryCard}>
-        <h3 className={styles.summaryTitle}>Umumiy xarajatlar</h3>
+        <h3 className={styles.summaryTitle}>Total expenses</h3>
 
         <div className={styles.summaryList}>
           {categories.map((cat, index) => {
@@ -265,9 +263,7 @@ export default function Categories() {
 
                 <div className={styles.summaryRight}>
                   <span className={`${styles.summaryAmount} ${amountClass}`}>
-                    {cat.netAmount === 0
-                      ? "0 so'm"
-                      : formatMoney(cat.netAmount)}
+                    {cat.netAmount === 0 ? "0 UZS" : formatMoney(cat.netAmount)}
                   </span>
 
                   <span className={styles.summaryPercent}>

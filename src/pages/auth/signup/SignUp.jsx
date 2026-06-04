@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import styles from "./signUp.module.css";
 import { useNavigate } from "react-router-dom";
+import logo from "../../../assets/icons/logo.svg";
+import Toast from "../../../components/Toast/Toast";
+import { useToast } from "../../../components/Toast/useToast";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -10,14 +13,18 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { toasts, toast, removeToast } = useToast();
 
   const handleRegister = (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      alert("Kiritilgan parollar bir biriga mos emas!");
+      toast({ message: "Passwords do not match.", type: "error" });
       return;
     }
+
+    setLoading(true);
 
     const newAccount = {
       userName: name,
@@ -27,39 +34,65 @@ const Signup = () => {
 
     fetch("http://localhost:5000/users", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newAccount),
-    }).then(() => {
-      alert("Royxatdan muvaffaqiyatli o'tdingiz, endi login qiling!");
-      navigate("/login");
-    });
+    })
+      .then(() => {
+        toast({ message: "Account created! Please sign in.", type: "success" });
+        setTimeout(() => navigate("/login"), 1500);
+      })
+      .finally(() => setLoading(false));
   };
+
+  const EyeOpen = () => (
+    <svg
+      width="15"
+      height="15"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+    >
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  );
+
+  const EyeClosed = () => (
+    <svg
+      width="15"
+      height="15"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+    >
+      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+      <line x1="1" y1="1" x2="23" y2="23" />
+    </svg>
+  );
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.loginCard}>
-        <div className={styles.logoContainer}>
+      <Toast toasts={toasts} removeToast={removeToast} />
+
+      <div className={styles.formCard}>
+        <div className={styles.cardLogo}>
           <div className={styles.logoBg}>
-            <svg
-              className={styles.logoIcon}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              strokeWidth="2"
-            >
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-            </svg>
+            <img className={styles.logo} src={logo} alt="logo" />
           </div>
         </div>
 
-        <h2 className={styles.title}>Hisob yaratish</h2>
-        <p className={styles.subtitle}>Ma'lumotlaringizni kiriting</p>
+        <div className={styles.cardHeading}>
+          <h1 className={styles.cardTitle}>Create account</h1>
+          <p className={styles.cardSubtitle}>
+            Enter your details to get started
+          </p>
+        </div>
 
         <form onSubmit={handleRegister} className={styles.form}>
-          <div className={styles.inputGroup}>
-            <label className={styles.label}>Ism</label>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Full name</label>
             <div className={styles.inputWrapper}>
               <svg
                 className={styles.inputIcon}
@@ -73,7 +106,7 @@ const Signup = () => {
               </svg>
               <input
                 type="text"
-                placeholder="Ismingiz"
+                placeholder="Your name"
                 className={styles.input}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -82,8 +115,8 @@ const Signup = () => {
             </div>
           </div>
 
-          <div className={styles.inputGroup}>
-            <label className={styles.label}>Email</label>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Email address</label>
             <div className={styles.inputWrapper}>
               <svg
                 className={styles.inputIcon}
@@ -97,7 +130,7 @@ const Signup = () => {
               </svg>
               <input
                 type="email"
-                placeholder="email@example.com"
+                placeholder="you@example.com"
                 className={styles.input}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -106,8 +139,8 @@ const Signup = () => {
             </div>
           </div>
 
-          <div className={styles.inputGroup}>
-            <label className={styles.label}>Parol</label>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Password</label>
             <div className={styles.inputWrapper}>
               <svg
                 className={styles.inputIcon}
@@ -131,37 +164,13 @@ const Signup = () => {
                 className={styles.eyeIcon}
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? (
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
-                    <line x1="1" y1="1" x2="23" y2="23" />
-                  </svg>
-                ) : (
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                )}
+                {showPassword ? <EyeClosed /> : <EyeOpen />}
               </span>
             </div>
           </div>
 
-          <div className={styles.inputGroup}>
-            <label className={styles.label}>Parolni tasdiqlash</label>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Confirm password</label>
             <div className={styles.inputWrapper}>
               <svg
                 className={styles.inputIcon}
@@ -185,51 +194,24 @@ const Signup = () => {
                 className={styles.eyeIcon}
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
-                {showConfirmPassword ? (
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
-                    <line x1="1" y1="1" x2="23" y2="23" />
-                  </svg>
-                ) : (
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                )}
+                {showConfirmPassword ? <EyeClosed /> : <EyeOpen />}
               </span>
             </div>
           </div>
 
-          <button type="submit" className={styles.submitBtn}>
-            Ro'yxatdan o'tish
+          <button type="submit" className={styles.submitBtn} disabled={loading}>
+            {loading ? "Creating account..." : "Create account"}
           </button>
         </form>
 
         <p className={styles.footerText}>
-          Hisobingiz bormi?{" "}
-          <b>
-            <span
-              className={styles.registerLink}
-              onClick={() => navigate("/login")}
-              style={{ cursor: "pointer" }}
-            >
-              Kirish
-            </span>
-          </b>
+          Already have an account?{" "}
+          <span
+            className={styles.footerLink}
+            onClick={() => navigate("/login")}
+          >
+            Sign in
+          </span>
         </p>
       </div>
     </div>

@@ -51,7 +51,7 @@ export default function AddCategoryModal({ onClose, onRefresh }) {
 
     // Validatsiya: Agar nom bo'sh bo'lsa yoki user tizimga kirmagan bo'lsa to'xtatish
     if (!categoryName.trim() || !currentUserId) {
-      alert("Xatolik: Ma'lumotlar to'liq emas yoki tizimga kirmagansiz!");
+      alert("Error: Information is incomplete or you are not logged in!");
       return;
     }
 
@@ -73,7 +73,7 @@ export default function AddCategoryModal({ onClose, onRefresh }) {
           onRefresh(); // Dashboard yoki Kategoriyalar sahifasini yangilash
           onClose(); // Modalni yopish
         } else {
-          alert("Kategoriyani saqlashda xatolik yuz berdi.");
+          alert("An error occurred while saving the category.");
         }
       })
       .catch((err) => console.error("Xatolik:", err));
@@ -84,7 +84,7 @@ export default function AddCategoryModal({ onClose, onRefresh }) {
       <div className={styles.modalContent}>
         {/* Modal Tepadagi qismi */}
         <div className={styles.modalHeader}>
-          <h3 className={styles.modalTitle}>Yangi kategoriya</h3>
+          <h3 className={styles.modalTitle}>New Category</h3>
           <button type="button" className={styles.closeBtn} onClick={onClose}>
             <FiX />
           </button>
@@ -94,10 +94,10 @@ export default function AddCategoryModal({ onClose, onRefresh }) {
         <form onSubmit={handleSubmit} className={styles.form}>
           {/* Kategoriya nomi inputi */}
           <div className={styles.formGroup}>
-            <label className={styles.label}>Kategoriya nomi</label>
+            <label className={styles.label}>Category name</label>
             <input
               type="text"
-              placeholder="Masalan: Benzindagi xarajat"
+              placeholder="Example: Gas expense"
               className={styles.input}
               value={categoryName}
               onChange={(e) => setCategoryName(e.target.value)}
@@ -107,7 +107,7 @@ export default function AddCategoryModal({ onClose, onRefresh }) {
 
           {/* Ikonka tanlash paneli */}
           <div className={styles.formGroup}>
-            <label className={styles.label}>Ikonka tanlang</label>
+            <label className={styles.label}>Choose icon</label>
             <div className={styles.iconsGrid}>
               {iconsList.map((icon) => (
                 <button
@@ -126,7 +126,7 @@ export default function AddCategoryModal({ onClose, onRefresh }) {
 
           {/* Rang tanlash paneli */}
           <div className={styles.formGroup}>
-            <label className={styles.label}>Rang tanlang</label>
+            <label className={styles.label}>Choose color</label>
             <div className={styles.colorGrid}>
               {colorsList.map((color) => (
                 <button
@@ -149,10 +149,10 @@ export default function AddCategoryModal({ onClose, onRefresh }) {
               className={styles.cancelBtn}
               onClick={onClose}
             >
-              Bekor qilish
+              Cancel
             </button>
             <button type="submit" className={styles.submitBtn}>
-              Qo'shish
+              Add
             </button>
           </div>
         </form>

@@ -4,149 +4,240 @@
   align-items: center;
   min-height: 100vh;
   width: 100%;
-  background: linear-gradient(
-    135deg,
-    var(--color-gradient-bg-start),
-    var(--color-gradient-bg-end)
-  );
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(
+      ellipse 60% 50% at 15% 85%,
+      rgba(201, 255, 71, 0.06) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 50% 40% at 85% 15%,
+      rgba(201, 255, 71, 0.04) 0%,
+      transparent 55%
+    );
+  padding: var(--space-6);
 }
 
-.loginCard {
-  background-color: var(--color-white);
-  padding: 40px;
-  border-radius: 16px;
+.formCard {
   width: 100%;
-  max-width: 440px;
-  box-shadow: 0 4px 20px var(--color-rgba-black-10);
-  text-align: center;
+  max-width: 400px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-10);
+  box-shadow: var(--shadow-lg);
+  animation: scaleIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.logoContainer {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
+.cardLogo {
+  margin-bottom: var(--space-8);
 }
 
 .logoBg {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-blue), var(--color-green));
+  width: 38px;
+  height: 38px;
+  background: var(--accent);
+  border-radius: var(--radius-md);
   display: flex;
-  justify-content: center;
   align-items: center;
-  color: var(--color-white);
+  justify-content: center;
+  color: var(--accent-fg);
 }
 
-.logoIcon {
-  width: 28px;
-  height: 28px;
+.logo {
+  width: 1.4rem;
 }
 
-.title {
-  color: var(--color-charcoal);
-  font-size: 24px;
-  font-weight: 600;
-  margin: 0 0 8px 0;
+[data-theme="dark"] .logoBg {
+  background: var(--bg);
 }
 
-.subtitle {
-  color: var(--color-gray);
-  font-size: 14px;
-  margin: 0 0 28px 0;
+.cardHeading {
+  margin-bottom: var(--space-8);
+}
+
+.cardTitle {
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-1) 0;
+  line-height: 1.15;
+}
+
+.cardSubtitle {
+  font-size: 13.5px;
+  color: var(--text-tertiary);
+  margin: 0;
+  font-weight: 400;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--space-4);
 }
 
-.inputGroup {
+.formGroup {
   display: flex;
   flex-direction: column;
-  text-align: left;
-  gap: 6px;
+  gap: var(--space-2);
 }
 
 .label {
-  color: var(--color-charcoal);
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .inputWrapper {
   position: relative;
   display: flex;
   align-items: center;
-  padding-right: 15px;
-  background-color: var(--color-light-gray);
-  border-radius: 8px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.inputWrapper:focus-within {
+  border-color: var(--border-focus);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .inputWrapper:focus-within {
+  box-shadow: 0 0 0 3px rgba(201, 255, 71, 0.07);
+  border-color: rgba(201, 255, 71, 0.3);
 }
 
 .inputIcon {
   position: absolute;
-  left: 14px;
-  width: 18px;
-  height: 18px;
-  color: var(--color-gray);
+  left: 13px;
+  width: 15px;
+  height: 15px;
+  color: var(--text-tertiary);
   pointer-events: none;
+  flex-shrink: 0;
+  transition: color var(--transition-fast);
+}
+
+.inputWrapper:focus-within .inputIcon {
+  color: var(--text-secondary);
 }
 
 .input {
   width: 100%;
-  padding: 14px 14px 14px 44px;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  color: var(--color-charcoal);
-  font-size: 14px;
-  background-color: var(--color-light-gray);
+  padding: 11px 40px 11px 42px;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 13.5px;
+  font-weight: 400;
   outline: none;
-  transition: all 0.2s ease;
+  font-family: var(--font-sans);
+  line-height: 1.5;
 }
 
 .input::placeholder {
-  color: var(--color-gray);
-  opacity: 0.7;
+  color: var(--text-tertiary);
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 12px;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  transition:
+    color var(--transition-fast),
+    background-color var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.eyeIcon:hover {
+  color: var(--text-primary);
+  background: var(--bg-subtle);
 }
 
 .submitBtn {
+  margin-top: var(--space-2);
   width: 100%;
-  padding: 14px;
-  background-color: var(--color-dark);
-  color: var(--color-white);
+  padding: 12px 16px;
+  background: var(--accent);
+  color: var(--accent-fg);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 700;
   cursor: pointer;
-  margin-top: 8px;
-  transition: opacity 0.2s ease;
+  letter-spacing: -0.01em;
+  transition:
+    opacity var(--transition-fast),
+    transform var(--transition-fast);
+  font-family: var(--font-sans);
 }
 
 .submitBtn:hover {
-  opacity: 0.9;
+  opacity: 0.82;
+}
+.submitBtn:active {
+  transform: scale(0.985);
+}
+.submitBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+[data-theme="dark"] .submitBtn {
+  background: var(--accent-electric);
+  color: #0d0d0c;
 }
 
 .footerText {
-  margin-top: 24px;
+  margin-top: var(--space-6);
   font-size: 13px;
-  color: var(--color-dark);
+  color: var(--text-tertiary);
+  text-align: center;
 }
 
-.loginLink {
-  color: var(--color-charcoal);
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.loginLink:hover {
+.footerLink {
+  color: var(--text-primary);
+  font-weight: 700;
   text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--border-strong);
+  cursor: pointer;
+  transition: text-decoration-color var(--transition-fast);
+}
+
+.footerLink:hover {
+  text-decoration-color: var(--text-primary);
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    padding: 0;
+    align-items: flex-start;
+    background-image: none;
+    background-color: var(--surface);
+  }
+
+  .formCard {
+    max-width: 100%;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    min-height: 100svh;
+    padding: var(--space-10) var(--space-6);
+  }
 }

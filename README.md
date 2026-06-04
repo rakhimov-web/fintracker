@@ -1,16 +1,35 @@
-# React + Vite
+# Finance Dashboard & User Profile 🚀
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive financial management and user profile platform designed with a focus on clean UI/UX, intuitive data management, and secure account settings.
 
-Currently, two official plugins are available:
+## 📸 Preview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+![Dashboard Preview](/src/assets/images/screenshot.png)
 
-## React Compiler
+## 🚀 Key Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Smart Dashboard:** Comprehensive overview of financial status with integrated transaction tracking.
+- **User Profile Management:** Edit personal information, manage security settings, and update profile data seamlessly.
+- **Theme Customization:** Dynamic Dark/Light mode support for a personalized user experience.
+- **Secure Authentication:** Built-in login/signup flow with validation and toast notifications.
+- **Responsive Design:** Fully optimized for mobile, tablet, and desktop viewports with a consistent layout.
+- **Interactive UI:** Smooth transitions, accessible form handling, and custom alert notifications.
 
-## Expanding the ESLint configuration
+## 🛠 Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend Library:** React.js
+- **Routing:** React Router (BrowserRouter)
+- **Styling:** CSS Modules, Modern CSS3 (Flexbox/Grid, CSS Variables)
+- **Icons:** React Icons (Fi Icons)
+- **Logic:** React Hooks (`useState`, `useEffect`, `useCallback`)
+- **State Management:** LocalStorage API for theme and authentication persistence.
+
+## 🔗 Project Overview
+
+- **Authentication:** Integrated user flow (Login/Signup).
+- **Data Handling:** RESTful API integration for user profile and transaction management.
+- **Accessibility:** Semantic HTML5 and accessible input components.
+
+---
+
+_Created with React_

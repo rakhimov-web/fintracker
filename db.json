@@ -1,32 +1,21 @@
 {
   "users": [
     {
-      "id": "2c9f",
+      "id": "edbe",
       "userName": "John",
       "userEmail": "john@gmail.com",
-      "userPass": "1234",
-      "phone": "+998 00 000 00 00",
-      "address": "Tashkent"
+      "userPass": "john123"
     }
   ],
   "transactions": [
     {
-      "id": "832b",
-      "userId": "2c9f",
-      "name": "Oylik",
-      "category": "Ishxona",
-      "amount": "8000000",
-      "date": "2026-05-31",
-      "type": "income"
-    },
-    {
-      "id": "839b",
       "userId": "2c9f",
       "name": "Jarima",
       "category": "Ishxona",
       "amount": "500000",
       "date": "2026-06-01",
-      "type": "expense"
+      "type": "expense",
+      "id": "839b"
     },
     {
       "userId": "2c9f",
@@ -36,50 +25,86 @@
       "date": "2026-06-02",
       "type": "expense",
       "id": "67af"
+    },
+    {
+      "id": "ac76",
+      "userId": "edbe",
+      "name": "monthly income",
+      "category": "Work",
+      "amount": "6000000",
+      "date": "2026-06-01",
+      "type": "income"
+    },
+    {
+      "id": "0261",
+      "userId": "edbe",
+      "name": "Cinema",
+      "category": "Entertainment",
+      "amount": "500000",
+      "date": "2026-06-05",
+      "type": "expense"
+    },
+    {
+      "id": "9110",
+      "userId": "edbe",
+      "name": "Cashback",
+      "category": "Payments",
+      "amount": "625000",
+      "date": "2026-06-11",
+      "type": "income"
+    },
+    {
+      "id": "e85f",
+      "userId": "edbe",
+      "name": "Laptop",
+      "category": "Work",
+      "amount": "420000",
+      "date": "2026-06-15",
+      "type": "expense"
     }
   ],
   "categories": [
     {
-      "id": "d0a7",
-      "name": "Ovqat",
+      "id": "fa8e",
+      "name": "Food",
       "icon": "shopping-cart",
       "color": "#2b7fff",
-      "userId": "2c9f"
+      "userId": "edbe"
     },
     {
-      "id": "fc2e",
+      "id": "d45a",
       "name": "Transport",
       "icon": "truck",
       "color": "#00c950",
-      "userId": "2c9f"
+      "userId": "edbe"
     },
     {
-      "id": "e2e8",
-      "name": "To'lovlar",
+      "id": "e00a",
+      "name": "Payments",
       "icon": "home",
       "color": "#ff9f43",
-      "userId": "2c9f"
+      "userId": "edbe"
     },
     {
-      "id": "3ba7",
-      "name": "Ishxona",
-      "icon": "briefcase",
-      "color": "#465eff",
-      "userId": "2c9f"
-    },
-    {
-      "id": "28a8",
-      "name": "Salomatlik",
-      "icon": "heart",
-      "color": "#ff3b30",
-      "userId": "2c9f"
-    },
-    {
-      "id": "9a95",
-      "name": "O'yin-kulgi",
+      "id": "c235",
+      "name": "Entertainment",
       "icon": "gamepad",
       "color": "#ad46ff",
-      "userId": "2c9f"
+      "userId": "edbe"
+    },
+    {
+      "id": "9844",
+      "name": "Health",
+      "icon": "heart",
+      "color": "#ff3b30",
+      "userId": "edbe"
+    },
+    {
+      "id": "0ee5",
+      "name": "Work",
+      "icon": "briefcase",
+      "color": "#465eff",
+      "userId": "edbe"
     }
   ]
 }

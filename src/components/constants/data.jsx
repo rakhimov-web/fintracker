@@ -13,21 +13,21 @@ export const links = [
   {
     icon: <GoArrowSwitch />,
     path: "/dashboard/transaction",
-    title: "Tranzaksiyalar",
+    title: "Transactions",
   },
   {
     icon: <RiFolderChartLine />,
     path: "/dashboard/categories",
-    title: "Kategoriyalar",
+    title: "Categories",
   },
   {
     icon: <FaRegChartBar />,
     path: "/dashboard/statistics",
-    title: "Statistika",
+    title: "Statistics",
   },
   {
     icon: <FiUser />,
     path: "/dashboard/profile",
-    title: "Profil",
+    title: "Profile",
   },
 ];
