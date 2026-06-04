@@ -1,35 +1,29 @@
-# Finance Dashboard & User Profile 🚀
+# Personal Expense Tracker 🚀
 
-A modern, responsive financial management and user profile platform designed with a focus on clean UI/UX, intuitive data management, and secure account settings.
+A full-stack financial management platform for tracking income and expenses with real-time analytics.
 
 ## 📸 Preview
+![Finance Dashboard](/src/assets/images/screenshot.png)
 
-![Dashboard Preview](/src/assets/images/screenshot.png)
-
-## 🚀 Key Features
-
-- **Smart Dashboard:** Comprehensive overview of financial status with integrated transaction tracking.
-- **User Profile Management:** Edit personal information, manage security settings, and update profile data seamlessly.
-- **Theme Customization:** Dynamic Dark/Light mode support for a personalized user experience.
-- **Secure Authentication:** Built-in login/signup flow with validation and toast notifications.
-- **Responsive Design:** Fully optimized for mobile, tablet, and desktop viewports with a consistent layout.
-- **Interactive UI:** Smooth transitions, accessible form handling, and custom alert notifications.
+## 🚀 Overview
+A robust expense tracking solution featuring automated data persistence via JSON Server. Designed for performance, scalability, and seamless user experience.
 
 ## 🛠 Tech Stack
+* **Client:** React.js, React Router, CSS Modules
+* **Server:** JSON Server (REST API)
+* **State Management:** React Hooks (useState, useEffect, useCallback)
+* **Icons:** React Icons (Fi)
 
-- **Frontend Library:** React.js
-- **Routing:** React Router (BrowserRouter)
-- **Styling:** CSS Modules, Modern CSS3 (Flexbox/Grid, CSS Variables)
-- **Icons:** React Icons (Fi Icons)
-- **Logic:** React Hooks (`useState`, `useEffect`, `useCallback`)
-- **State Management:** LocalStorage API for theme and authentication persistence.
+## ⚡ Key Capabilities
+* **Full-Stack CRUD:** Persistent transaction and category management.
+* **Data Visualization:** Integrated statistics for financial reporting.
+* **Authentication:** Secure user sessions and profile management.
+* **UI/UX:** Responsive interface with Dark/Light mode support.
 
-## 🔗 Project Overview
-
-- **Authentication:** Integrated user flow (Login/Signup).
-- **Data Handling:** RESTful API integration for user profile and transaction management.
-- **Accessibility:** Semantic HTML5 and accessible input components.
+## ⚙️ Deployment
+1. **Install:** `npm install`
+2. **Mock Server:** `json-server --watch db.json --port 5000`
+3. **Development:** `npm run dev`
 
 ---
-
-_Created with React_
+*Developed by Rahimov*
