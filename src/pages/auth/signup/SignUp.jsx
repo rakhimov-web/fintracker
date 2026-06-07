@@ -27,19 +27,46 @@ const Signup = () => {
     setLoading(true);
 
     const newAccount = {
+      id: Math.random().toString(36).substring(2, 6),
       userName: name,
       userEmail: email,
       userPass: password,
     };
 
-    fetch("http://localhost:5000/users", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newAccount),
+    fetch("https://api.jsonbin.io/v3/b/6a2579a0da38895dfe94f2fb/latest", {
+      headers: {
+        "X-Master-Key":
+          "$2a$10$49JQn9KqhjJzG7.NmQS/web6eUaZEeIPAczvJF2hmWtPW3HDnQuUG",
+      },
     })
+      .then((res) => res.json())
+      .then((data) => {
+        const currentData = data.record || {};
+        const updatedUsers = [...(currentData.users || []), newAccount];
+
+        return fetch("https://api.jsonbin.io/v3/b/6a2579a0da38895dfe94f2fb", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Master-Key":
+              "$2a$10$49JQn9KqhjJzG7.NmQS/web6eUaZEeIPAczvJF2hmWtPW3HDnQuUG",
+          },
+          body: JSON.stringify({
+            ...currentData,
+            users: updatedUsers,
+          }),
+        });
+      })
       .then(() => {
         toast({ message: "Account created! Please sign in.", type: "success" });
         setTimeout(() => navigate("/login"), 1500);
+      })
+      .catch((err) => {
+        console.error(err);
+        toast({
+          message: "An error occurred during registration.",
+          type: "error",
+        });
       })
       .finally(() => setLoading(false));
   };

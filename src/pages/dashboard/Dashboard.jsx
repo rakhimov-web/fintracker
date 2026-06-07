@@ -26,15 +26,19 @@ export default function Dashboard() {
   useEffect(() => {
     if (!currentUserId) return;
 
-    Promise.all([
-      fetch("http://localhost:5000/transactions").then((res) =>
-        res.ok ? res.json() : [],
-      ),
-      fetch("http://localhost:5000/categories").then((res) =>
-        res.ok ? res.json() : [],
-      ),
-    ])
-      .then(([txData, catData]) => {
+    fetch("https://api.jsonbin.io/v3/b/6a2579a0da38895dfe94f2fb/latest", {
+      headers: {
+        "X-Master-Key":
+          "$2a$10$49JQn9KqhjJzG7.NmQS/web6eUaZEeIPAczvJF2hmWtPW3HDnQuUG",
+      },
+    })
+      .then((res) =>
+        res.ok ? res.json() : { record: { transactions: [], categories: [] } },
+      )
+      .then((data) => {
+        const txData = data.record.transactions || [];
+        const catData = data.record.categories || [];
+
         const userTransactions = txData.filter(
           (tx) => String(tx.userId) === String(currentUserId),
         );

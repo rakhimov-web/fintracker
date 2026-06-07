@@ -45,13 +45,19 @@ export default function Categories() {
     if (!currentUserId) return;
 
     try {
-      const [catRes, txRes] = await Promise.all([
-        fetch("http://localhost:5000/categories"),
-        fetch("http://localhost:5000/transactions"),
-      ]);
+      const response = await fetch(
+        "https://api.jsonbin.io/v3/b/6a2579a0da38895dfe94f2fb/latest",
+        {
+          headers: {
+            "X-Master-Key":
+              "$2a$10$49JQn9KqhjJzG7.NmQS/web6eUaZEeIPAczvJF2hmWtPW3HDnQuUG",
+          },
+        },
+      );
 
-      const allCategories = await catRes.json();
-      const txData = await txRes.json();
+      const data = await response.json();
+      const allCategories = data.record.categories || [];
+      const txData = data.record.transactions || [];
 
       let userCategories = allCategories.filter(
         (cat) => String(cat.userId) === String(currentUserId),
@@ -66,19 +72,28 @@ export default function Categories() {
       );
 
       if (missingCategories.length > 0) {
-        const createPromises = missingCategories.map((cat) =>
-          fetch("http://localhost:5000/categories", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              ...cat,
-              userId: currentUserId,
-            }),
-          }).then((res) => res.json()),
-        );
+        const newCatsToAdd = missingCategories.map((cat) => ({
+          ...cat,
+          id: Math.random().toString(36).substring(2, 6),
+          userId: currentUserId,
+        }));
 
-        const createdCategories = await Promise.all(createPromises);
-        userCategories = [...userCategories, ...createdCategories];
+        const updatedAllCategories = [...allCategories, ...newCatsToAdd];
+
+        await fetch("https://api.jsonbin.io/v3/b/6a2579a0da38895dfe94f2fb", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Master-Key":
+              "$2a$10$49JQn9KqhjJzG7.NmQS/web6eUaZEeIPAczvJF2hmWtPW3HDnQuUG",
+          },
+          body: JSON.stringify({
+            ...data.record,
+            categories: updatedAllCategories,
+          }),
+        });
+
+        userCategories = [...userCategories, ...newCatsToAdd];
       }
 
       const userTransactions = txData.filter(

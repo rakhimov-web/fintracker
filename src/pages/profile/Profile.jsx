@@ -40,20 +40,32 @@ export default function Profile() {
     () => document.documentElement.getAttribute("data-theme") === "dark",
   );
 
+  const currentUserId = localStorage.getItem("userId") || "";
+
   useEffect(() => {
-    fetch("http://localhost:5000/users")
+    fetch("https://api.jsonbin.io/v3/b/6a2579a0da38895dfe94f2fb/latest", {
+      headers: {
+        "X-Master-Key":
+          "$2a$10$49JQn9KqhjJzG7.NmQS/web6eUaZEeIPAczvJF2hmWtPW3HDnQuUG",
+      },
+    })
       .then((res) => res.json())
-      .then((users) => {
+      .then((data) => {
+        const users = data.record.users || [];
         if (users.length > 0) {
-          const user = users[users.length - 1];
+          let user = users.find((u) => String(u.id) === String(currentUserId));
+          if (!user) {
+            user = users[users.length - 1];
+          }
           setCurrentUser(user);
           setName(user.userName || "");
           setEmail(user.userEmail || "");
           setPhone(user.phone || "+998 ");
           setAddress(user.address || "");
         }
-      });
-  }, []);
+      })
+      .catch((err) => console.error(err));
+  }, [currentUserId]);
 
   const handleThemeToggle = () => {
     const next = !isDark;
@@ -85,22 +97,49 @@ export default function Profile() {
   const handleSaveInfo = (e) => {
     e.preventDefault();
     if (!currentUser) return;
-    const updatedData = {
-      userName: name,
-      userEmail: email,
-      phone: phone,
-      address: address,
-    };
-    fetch(`http://localhost:5000/users/${currentUser.id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedData),
+
+    fetch("https://api.jsonbin.io/v3/b/6a2579a0da38895dfe94f2fb/latest", {
+      headers: {
+        "X-Master-Key":
+          "$2a$10$49JQn9KqhjJzG7.NmQS/web6eUaZEeIPAczvJF2hmWtPW3HDnQuUG",
+      },
     })
       .then((res) => res.json())
       .then((data) => {
-        setCurrentUser(data);
-        toast({ message: "Profile updated successfully.", type: "success" });
-      });
+        const allUsers = data.record.users || [];
+        const updatedUser = {
+          ...currentUser,
+          userName: name,
+          userEmail: email,
+          phone: phone,
+          address: address,
+        };
+        const updatedUsers = allUsers.map((u) =>
+          String(u.id) === String(currentUser.id) ? updatedUser : u,
+        );
+
+        return fetch("https://api.jsonbin.io/v3/b/6a2579a0da38895dfe94f2fb", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Master-Key":
+              "$2a$10$49JQn9KqhjJzG7.NmQS/web6eUaZEeIPAczvJF2hmWtPW3HDnQuUG",
+          },
+          body: JSON.stringify({
+            ...data.record,
+            users: updatedUsers,
+          }),
+        }).then((res) => {
+          if (res.ok) {
+            setCurrentUser(updatedUser);
+            toast({
+              message: "Profile updated successfully.",
+              type: "success",
+            });
+          }
+        });
+      })
+      .catch((err) => console.error(err));
   };
 
   const handlePasswordUpdate = () => {
@@ -114,19 +153,47 @@ export default function Profile() {
     }
     if (!currentUser) return;
 
-    fetch(`http://localhost:5000/users/${currentUser.id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userPass: newPassword }),
-    }).then(() => {
-      setOldPassword("");
-      setNewPassword("");
-      toast({ message: "Password updated. Signing out...", type: "success" });
-      setTimeout(() => {
-        localStorage.removeItem("isAuth");
-        navigate("/login");
-      }, 1500);
-    });
+    fetch("https://api.jsonbin.io/v3/b/6a2579a0da38895dfe94f2fb/latest", {
+      headers: {
+        "X-Master-Key":
+          "$2a$10$49JQn9KqhjJzG7.NmQS/web6eUaZEeIPAczvJF2hmWtPW3HDnQuUG",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const allUsers = data.record.users || [];
+        const updatedUser = { ...currentUser, userPass: newPassword };
+        const updatedUsers = allUsers.map((u) =>
+          String(u.id) === String(currentUser.id) ? updatedUser : u,
+        );
+
+        return fetch("https://api.jsonbin.io/v3/b/6a2579a0da38895dfe94f2fb", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Master-Key":
+              "$2a$10$49JQn9KqhjJzG7.NmQS/web6eUaZEeIPAczvJF2hmWtPW3HDnQuUG",
+          },
+          body: JSON.stringify({
+            ...data.record,
+            users: updatedUsers,
+          }),
+        }).then((res) => {
+          if (res.ok) {
+            setOldPassword("");
+            setNewPassword("");
+            toast({
+              message: "Password updated. Signing out...",
+              type: "success",
+            });
+            setTimeout(() => {
+              localStorage.removeItem("isAuth");
+              navigate("/login");
+            }, 1500);
+          }
+        });
+      })
+      .catch((err) => console.error(err));
   };
 
   const handleLogout = () => {

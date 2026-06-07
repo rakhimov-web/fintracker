@@ -21,9 +21,15 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
 
-    fetch("http://localhost:5000/users")
+    fetch("https://api.jsonbin.io/v3/b/6a2579a0da38895dfe94f2fb/latest", {
+      headers: {
+        "X-Master-Key":
+          "$2a$10$49JQn9KqhjJzG7.NmQS/web6eUaZEeIPAczvJF2hmWtPW3HDnQuUG",
+      },
+    })
       .then((res) => res.json())
-      .then((usersList) => {
+      .then((data) => {
+        const usersList = data.record.users || [];
         const foundUser = usersList.find(
           (u) => u.userEmail === email && u.userPass === password,
         );
@@ -37,6 +43,13 @@ const Login = () => {
             type: "error",
           });
         }
+      })
+      .catch((err) => {
+        console.error(err);
+        toast({
+          message: "An error occurred during sign in.",
+          type: "error",
+        });
       })
       .finally(() => setLoading(false));
   };

@@ -27,10 +27,16 @@ export default function Transactions() {
 
   const fetchTransactions = () => {
     if (!currentUserId) return;
-    fetch("http://localhost:5000/transactions")
-      .then((res) => (res.ok ? res.json() : []))
+    fetch("https://api.jsonbin.io/v3/b/6a2579a0da38895dfe94f2fb/latest", {
+      headers: {
+        "X-Master-Key":
+          "$2a$10$49JQn9KqhjJzG7.NmQS/web6eUaZEeIPAczvJF2hmWtPW3HDnQuUG",
+      },
+    })
+      .then((res) => (res.ok ? res.json() : { record: { transactions: [] } }))
       .then((data) => {
-        const userTransactions = data.filter(
+        const allTx = data.record.transactions || [];
+        const userTransactions = allTx.filter(
           (tx) => String(tx.userId) === String(currentUserId),
         );
         setTransactions(userTransactions);
@@ -45,9 +51,30 @@ export default function Transactions() {
   const handleDelete = (id) => {
     if (!window.confirm("Do you want to delete this transaction?")) return;
 
-    fetch(`http://localhost:5000/transactions/${id}`, {
-      method: "DELETE",
+    fetch("https://api.jsonbin.io/v3/b/6a2579a0da38895dfe94f2fb/latest", {
+      headers: {
+        "X-Master-Key":
+          "$2a$10$49JQn9KqhjJzG7.NmQS/web6eUaZEeIPAczvJF2hmWtPW3HDnQuUG",
+      },
     })
+      .then((res) => res.json())
+      .then((data) => {
+        const allTx = data.record.transactions || [];
+        const updatedTx = allTx.filter((tx) => String(tx.id) !== String(id));
+
+        return fetch("https://api.jsonbin.io/v3/b/6a2579a0da38895dfe94f2fb", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Master-Key":
+              "$2a$10$49JQn9KqhjJzG7.NmQS/web6eUaZEeIPAczvJF2hmWtPW3HDnQuUG",
+          },
+          body: JSON.stringify({
+            ...data.record,
+            transactions: updatedTx,
+          }),
+        });
+      })
       .then((res) => {
         if (res.ok) fetchTransactions();
       })
